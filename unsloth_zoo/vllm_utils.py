@@ -1659,6 +1659,7 @@ def load_vllm(
     is_vision_model        : bool = False,
     return_args            : bool = False, # Just return args
     max_num_seqs           : int = 256, # how many seqs to process in parallel. Default vLLM 256
+    kv_transfer_config     : dict = None, # LMCache support for cross-batch KV caching
 ):
     # All Unsloth Zoo code licensed under LGPLv3
     # Create vLLM instance
@@ -2042,6 +2043,7 @@ def load_vllm(
         # New vLLM versions need to pass this in!
         # worker_extension_cls   = "unsloth_zoo.vllm_rlhf_utils.ColocateWorkerExtension",
         enable_sleep_mode      = unsloth_vllm_standby,
+        kv_transfer_config     = kv_transfer_config, # LMCache support
     )
     if is_vision_model:
         # To reduce memory usage, we limit the number of images/videos per prompt
